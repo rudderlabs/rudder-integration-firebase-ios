@@ -7,11 +7,11 @@
 
 #import <Foundation/Foundation.h>
 #import <Rudder/Rudder.h>
-#import <FirebaseCore/FirebaseCore.h>
-#import <FirebaseAnalytics/FirebaseAnalytics.h>
+//#import <FirebaseCore/FirebaseCore.h>
+//#import <FirebaseAnalytics/FirebaseAnalytics.h>
 
-// @import FirebaseCore;
-// @import FirebaseAnalytics;
+@import FirebaseCore;
+@import FirebaseAnalytics;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property NSArray* GOOGLE_RESERVED_KEYWORDS;
 @property NSArray* RESERVED_PARAM_NAMES;
+@property NSDictionary *EVENTS_MAPPING;
+@property NSDictionary *PRODUCTS_MAPPING;
+@property NSSet *PRODUCT_EVENT;
 
 - (instancetype)initWithConfig:(NSDictionary *)config withAnalytics:(RSClient *)client withRudderConfig:(RSConfig*) rudderConfig;
 

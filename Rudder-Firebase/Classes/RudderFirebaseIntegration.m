@@ -15,7 +15,53 @@
     self = [super init];
     if (self) {
         _GOOGLE_RESERVED_KEYWORDS = [[NSArray alloc] initWithObjects:@"age", @"gender", @"interest", nil];
-        _RESERVED_PARAM_NAMES = [[NSArray alloc] initWithObjects:@"product_id", @"name", @"category", @"quantity", @"price", @"currency", @"value", @"revenue", @"total", @"order_id", @"tax", @"shipping", @"coupon", nil];
+        _RESERVED_PARAM_NAMES = [[NSArray alloc] initWithObjects:@"product_id", @"name", @"category", @"quantity", @"price", @"currency", @"value", @"revenue", @"total", @"order_id", @"tax", @"shipping", @"coupon", @"cart_id", @"payment_method", @"query", @"list_id", @"promotion_id", @"creative", @"affiliation", @"share_via", kFIRParameterScreenName, kFIREventScreenView, nil];
+        
+        _EVENTS_MAPPING = @{
+            ECommPaymentInfoEntered : kFIREventAddPaymentInfo,
+            ECommProductAdded : kFIREventAddToCart,
+            ECommProductAddedToWishList : kFIREventAddToWishlist,
+            ECommCheckoutStarted : kFIREventBeginCheckout,
+//            ECommOrderCompleted : kFIREventEcommercePurchase,
+            ECommOrderCompleted : kFIREventPurchase,
+//            ECommOrderRefunded : kFIREventPurchaseRefund,
+            ECommOrderRefunded : kFIREventRefund,
+            ECommProductsSearched : kFIREventSearch,
+            ECommCartShared : kFIREventShare,
+            ECommProductShared : kFIREventShare,
+            ECommProductViewed : kFIREventViewItem,
+            ECommProductListViewed : kFIREventViewItemList,
+            ECommProductRemoved : kFIREventRemoveFromCart,
+            ECommProductClicked : kFIREventSelectContent,
+//            ECommPromotionViewed : kFIREventPresentOffer,
+            ECommPromotionViewed : kFIREventViewPromotion,
+            ECommPromotionClicked : kFIREventSelectPromotion,
+            ECommCartViewed : kFIREventViewCart
+        };
+        
+        _PRODUCTS_MAPPING = @{
+            @"product_id" : kFIRParameterItemID,
+            @"id" : kFIRParameterItemID,
+            @"name" : kFIRParameterItemName,
+            @"category" : kFIRParameterItemCategory,
+            @"quantity" : kFIRParameterQuantity,
+            @"price" : kFIRParameterPrice
+        };
+
+        _PRODUCT_EVENT = [NSSet setWithObjects:
+                                kFIREventAddPaymentInfo,
+                                kFIREventAddToCart,
+                                kFIREventAddToWishlist,
+                                kFIREventBeginCheckout,
+                                kFIREventRemoveFromCart,
+                                kFIREventViewItem,
+                                kFIREventViewItemList,
+                                kFIREventPurchase,
+                                kFIREventRefund,
+                                kFIREventViewCart,
+                                nil];
+        
+        
         dispatch_sync(dispatch_get_main_queue(), ^{
             if ([FIRApp defaultApp] == nil){
                 [FIRApp configure];
@@ -63,6 +109,8 @@
 - (void) processRudderEvent: (nonnull RSMessage *) message {
     NSString *type = message.type;
     if (type != nil) {
+        NSDictionary *properties;
+        NSMutableDictionary *params;
         if ([type  isEqualToString: @"identify"]) {
             NSString *userId = message.userId;
             if (userId != nil && ![userId isEqualToString:@""]) {
@@ -86,6 +134,47 @@
         } else if ([type isEqualToString:@"screen"]) {
             [RSLogger logInfo:@"Rudder doesn't support screen calls for Firebase Native SDK mode as screen recording in Firebase works out of the box"];
         } else if ([type isEqualToString:@"track"]) {
+            NSString *eventName = message.event;
+            if (!isEmpty(eventName)) {
+                NSString *firebaseEvent;
+                properties = message.properties;
+                params = [[NSMutableDictionary alloc] init];
+                if ([eventName isEqualToString:@"Application Opened"]) {
+                    firebaseEvent = kFIREventAppOpen;
+                }
+                // Handle E-Commerce event
+                else if (_EVENTS_MAPPING[eventName]){
+                    firebaseEvent = _EVENTS_MAPPING[eventName];
+                    if (properties != nil && [properties count]) {
+                        if ([firebaseEvent isEqualToString:kFIREventShare]) {
+                            if (properties[@"cart_id"]) {
+                                [params setValue:properties[@"cart_id"] forKey:kFIRParameterItemID];
+                            } else if (properties[@"product_id"]) {
+                                [params setValue:properties[@"product_id"] forKey:kFIRParameterItemID];
+                            }
+                        }
+                        else if ([firebaseEvent isEqualToString:kFIREventViewPromotion] || [firebaseEvent isEqualToString:kFIREventSelectPromotion]) {
+                            if (properties[@"name"]) {
+                                [params setValue:properties[@"name"] forKey:kFIRParameterPromotionName];
+                            }
+                        }
+                        else if ([firebaseEvent isEqualToString:kFIREventSelectContent]) {
+                            if (properties[@"product_id"]) {
+                                [params setValue:properties[@"product_id"] forKey:kFIRParameterItemID];
+                            }
+                        }
+                        else if ([eventName isEqualToString:ECommProductShared]) {
+                            [params setValue:properties[@"product"] forKey:kFIRParameterContentType];
+                        }
+                        else if ([eventName isEqualToString:ECommCartShared]) {
+                            [params setValue:properties[@"cart"] forKey:kFIRParameterContentType];
+                        }
+                        [self handleECommerce:params properties:properties firebaseEvent:firebaseEvent];
+                    }
+                }
+            }
+            
+            /*
             NSString *eventName = message.event;
             NSDictionary *properties = message.properties;
             if (eventName != nil && ![eventName isEqualToString:@""]) {
@@ -157,10 +246,90 @@
                     [FIRAnalytics logEventWithName:firebaseEvent parameters:params];
                 }
             }
+             */
         } else {
             [RSLogger logWarn:@"Message type is not recognized"];
         }
     }
+}
+
+-(void) handleECommerce:(NSMutableDictionary *) params properties: (NSDictionary *) properties firebaseEvent:(NSString *) firebaseEvent {
+    if (properties[@"revenue"] && [self isCompatibleWithRevenue:properties[@"revenue"]]) {
+        [params setValue:[NSNumber numberWithDouble:[properties[@"revenue"] doubleValue]] forKey:kFIRParameterValue];
+    } else if (properties[@"value"] && [self isCompatibleWithRevenue:properties[@"value"]]) {
+        [params setValue:[NSNumber numberWithDouble:[properties[@"value"] doubleValue]] forKey:kFIRParameterValue];
+    } else if (properties[@"total"] && [self isCompatibleWithRevenue:properties[@"total"]]) {
+        [params setValue:[NSNumber numberWithDouble:[properties[@"total"] doubleValue]] forKey:kFIRParameterValue];
+    }
+    // Handle Products array or Product at the root level for the allowed events
+    if ([_PRODUCT_EVENT containsObject:firebaseEvent]) {
+        [self handleProducts:params properties:properties];
+    }
+    if (properties[@"payment_method"]) {
+        [params setValue:properties[@"payment_method"] forKey:kFIRParameterPaymentType];
+    }
+    
+    
+    
+    
+    if (properties[@"coupon"]) {
+        [params setValue:properties[@"coupon"] forKey:kFIRParameterCoupon];
+    }
+    if (properties[@"currency"]) {
+        [params setValue:properties[@"currency"] forKey:kFIRParameterCurrency];
+    } else {
+        [params setValue:properties[@"currency"] forKey:@"USD"];
+    }
+    if (properties[@"query"]) {
+        [params setValue:properties[@"query"] forKey:kFIRParameterSearchTerm];
+    }
+    if (properties[@"list_id"]) {
+        [params setValue:properties[@"list_id"] forKey:kFIRParameterItemListID];
+    }
+    if (properties[@"promotion_id"]) {
+        [params setValue:properties[@"promotion_id"] forKey:kFIRParameterPromotionID];
+    }
+    if (properties[@"creative"]) {
+        [params setValue:properties[@"creative"] forKey:kFIRParameterCreativeName];
+    }
+    if (properties[@"affiliation"]) {
+        [params setValue:properties[@"affiliation"] forKey:kFIRParameterAffiliation];
+    }
+    if (properties[@"shipping"]) {
+        [params setValue:properties[@"shipping"] forKey:kFIRParameterShipping];
+    }
+    if (properties[@"tax"]) {
+        [params setValue:properties[@"tax"] forKey:kFIRParameterTax];
+    }
+    if (properties[@"order_id"]) {
+        [params setValue:properties[@"order_id"] forKey:kFIRParameterTransactionID];
+    }
+    if (properties[@"share_via"]) {
+        [params setValue:properties[@"share_via"] forKey:kFIRParameterMethod];
+    }
+}
+
+-(void) handleProducts:(NSMutableDictionary *) params properties: (NSDictionary *) properties {
+    // If Products array is present
+    if (properties[@"products"]) {
+        
+    }
+    
+}
+
+BOOL isEmpty(NSString *value) {
+//    if (value == nil) {
+//        return true;
+//    }
+//    if ([value isKindOfClass:[NSString class]]) {
+//        NSString *valueType = [NSString stringWithFormat:@"%@", value];
+        return value == nil || [value isEqualToString:@""];
+//    }
+//    if ([value isKindOfClass:[NSDictionary class]]) {
+//        NSDictionary *valueType = [[NSDictionary alloc] initWithDictionary:value];
+//        return [valueType count] == 0;
+//    }
+//    return false;
 }
 
 - (void) addCheckoutProperties: (NSMutableDictionary *) params properties: (NSDictionary *) properties {
