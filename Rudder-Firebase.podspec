@@ -20,6 +20,5 @@ Pod::Spec.new do |s|
   s.static_framework = true
 
   s.dependency 'Rudder', '1.0.22'
-  s.dependency 'Firebase/Core', '8.7.0'
-  s.dependency 'FirebaseAnalytics', '8.7.0'
+  s.dependency 'FirebaseAnalytics', '8.8.0'
 end
