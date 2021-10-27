@@ -45,20 +45,19 @@
             @"price" : kFIRParameterPrice
         };
 
-        _PRODUCT_EVENT = [NSSet setWithObjects:
-                                kFIREventAddPaymentInfo,
-                                kFIREventAddToCart,
-                                kFIREventAddToWishlist,
-                                kFIREventBeginCheckout,
-                                kFIREventRemoveFromCart,
-                                kFIREventViewItem,
-                                kFIREventViewItemList,
-                                kFIREventPurchase,
-                                kFIREventRefund,
-                                kFIREventViewCart,
+        _PRODUCT_EVENT = [[NSArray alloc] initWithObjects:
+                          kFIREventAddPaymentInfo,
+                          kFIREventAddToCart,
+                          kFIREventAddToWishlist,
+                          kFIREventBeginCheckout,
+                          kFIREventRemoveFromCart,
+                          kFIREventViewItem,
+                          kFIREventViewItemList,
+                          kFIREventPurchase,
+                          kFIREventRefund,
+                          kFIREventViewCart,
                           kFIREventSelectContent,
-                                nil];
-        
+                          nil];
         
         dispatch_sync(dispatch_get_main_queue(), ^{
             if ([FIRApp defaultApp] == nil){
@@ -85,7 +84,7 @@
         NSMutableDictionary *params;
         if ([type  isEqualToString: @"identify"]) {
             NSString *userId = message.userId;
-            if (userId != nil && ![userId isEqualToString:@""]) {
+            if (![self isEmpty:userId]) {
                 [RSLogger logDebug:@"Setting userId to firebase"];
                 [FIRAnalytics setUserID:userId];
             }
@@ -105,7 +104,7 @@
             }
         } else if ([type isEqualToString:@"screen"]) {
             NSString *screenName = message.event;
-            if (screenName == nil || [screenName isEqualToString:@""]) {
+            if ([self isEmpty:screenName]) {
                 return;
             }
             params = [[NSMutableDictionary alloc] init];
@@ -114,7 +113,7 @@
             [FIRAnalytics logEventWithName:kFIREventScreenView parameters:params];
         } else if ([type isEqualToString:@"track"]) {
             NSString *eventName = message.event;
-            if (eventName != nil && ![eventName isEqualToString:@""]) {
+            if (![self isEmpty:eventName]) {
                 NSString *firebaseEvent;
                 properties = message.properties;
                 params = [[NSMutableDictionary alloc] init];
@@ -124,16 +123,16 @@
                 // Handle E-Commerce event
                 else if (_EVENTS_MAPPING[eventName]){
                     firebaseEvent = _EVENTS_MAPPING[eventName];
-                    if (properties != nil && [properties count]) {
+                    if (![self isEmpty:properties]) {
                         if ([firebaseEvent isEqualToString:kFIREventShare]) {
-                            if (properties[@"cart_id"]) {
+                            if (![self isEmpty:properties[@"cart_id"]]) {
                                 [params setValue:properties[@"cart_id"] forKey:kFIRParameterItemID];
-                            } else if (properties[@"product_id"]) {
+                            } else if (![self isEmpty:properties[@"product_id"]]) {
                                 [params setValue:properties[@"product_id"] forKey:kFIRParameterItemID];
                             }
                         }
                         else if ([firebaseEvent isEqualToString:kFIREventViewPromotion] || [firebaseEvent isEqualToString:kFIREventSelectPromotion]) {
-                            if (properties[@"name"]) {
+                            if (![self isEmpty:properties[@"name"]]) {
                                 [params setValue:properties[@"name"] forKey:kFIRParameterPromotionName];
                             }
                         }
@@ -165,67 +164,68 @@
 }
 
 -(void) handleECommerce:(NSMutableDictionary *) params properties: (NSDictionary *) properties firebaseEvent:(NSString *) firebaseEvent {
-    if (properties[@"revenue"] && [self isCompatibleWithRevenue:properties[@"revenue"]]) {
+    if (![self isEmpty:properties[@"revenue"]] && [self isCompatibleWithRevenue:properties[@"revenue"]]) {
         [params setValue:[NSNumber numberWithDouble:[properties[@"revenue"] doubleValue]] forKey:kFIRParameterValue];
-    } else if (properties[@"value"] && [self isCompatibleWithRevenue:properties[@"value"]]) {
+    } else if (![self isEmpty:properties[@"value"]] && [self isCompatibleWithRevenue:properties[@"value"]]) {
         [params setValue:[NSNumber numberWithDouble:[properties[@"value"] doubleValue]] forKey:kFIRParameterValue];
-    } else if (properties[@"total"] && [self isCompatibleWithRevenue:properties[@"total"]]) {
+    } else if (![self isEmpty:properties[@"total"]] && [self isCompatibleWithRevenue:properties[@"total"]]) {
         [params setValue:[NSNumber numberWithDouble:[properties[@"total"] doubleValue]] forKey:kFIRParameterValue];
     }
     // Handle Products array or Product at the root level for the allowed events
     if ([_PRODUCT_EVENT containsObject:firebaseEvent]) {
         [self handleProducts:params properties:properties];
     }
-    if (properties[@"payment_method"]) {
+    if (![self isEmpty:properties[@"payment_method"]]) {
         [params setValue:properties[@"payment_method"] forKey:kFIRParameterPaymentType];
     }
-    if (properties[@"coupon"]) {
+//    if (properties[@"coupon"] != nil) {
+    if (![self isEmpty:properties[@"coupon"]]) {
         [params setValue:properties[@"coupon"] forKey:kFIRParameterCoupon];
     }
-    if (properties[@"currency"]) {
+    if (![self isEmpty:properties[@"currency"]]) {
         [params setValue:properties[@"currency"] forKey:kFIRParameterCurrency];
     } else {
         [params setValue:properties[@"currency"] forKey:@"USD"];
     }
-    if (properties[@"query"]) {
+    if (![self isEmpty:properties[@"query"]]) {
         [params setValue:properties[@"query"] forKey:kFIRParameterSearchTerm];
     }
-    if (properties[@"list_id"]) {
+    if (![self isEmpty:properties[@"list_id"]]) {
         [params setValue:properties[@"list_id"] forKey:kFIRParameterItemListID];
     }
-    if (properties[@"promotion_id"]) {
+    if (![self isEmpty:properties[@"promotion_id"]]) {
         [params setValue:properties[@"promotion_id"] forKey:kFIRParameterPromotionID];
     }
-    if (properties[@"creative"]) {
+    if (![self isEmpty:properties[@"creative"]]) {
         [params setValue:properties[@"creative"] forKey:kFIRParameterCreativeName];
     }
-    if (properties[@"affiliation"]) {
+    if (![self isEmpty:properties[@"affiliation"]]) {
         [params setValue:properties[@"affiliation"] forKey:kFIRParameterAffiliation];
     }
-    if (properties[@"shipping"]) {
+    if (![self isEmpty:properties[@"shipping"]]) {
         [params setValue:[NSNumber numberWithDouble:[properties[@"shipping"] doubleValue]] forKey:kFIRParameterShipping];
     }
-    if (properties[@"tax"]) {
+    if (![self isEmpty:properties[@"tax"]]) {
         [params setValue:[NSNumber numberWithDouble:[properties[@"tax"] doubleValue]] forKey:kFIRParameterTax];
     }
-    if (properties[@"order_id"]) {
+    if (![self isEmpty:properties[@"order_id"]]) {
         [params setValue:properties[@"order_id"] forKey:kFIRParameterTransactionID];
     }
-    if (properties[@"share_via"]) {
+    if (![self isEmpty:properties[@"share_via"]]) {
         [params setValue:properties[@"share_via"] forKey:kFIRParameterMethod];
     }
 }
 
 -(void) handleProducts:(NSMutableDictionary *) params properties: (NSDictionary *) properties {
     // If Products array is present
-    if (properties[@"products"]){
+    if (![self isEmpty:properties[@"products"]]){
         NSDictionary *products = [properties objectForKey:@"products"];
         if ([products isKindOfClass:[NSArray class]]) {
             NSMutableArray *mappedProduct = [[NSMutableArray alloc] init];
             for (NSDictionary *product  in products) {
                 NSMutableDictionary *productBundle = [[NSMutableDictionary alloc] init];
                 for (NSString *key in _PRODUCTS_MAPPING) {
-                    if (product[key]) {
+                    if (![self isEmpty:product[key]]) {
                         [self putProductValue:productBundle firebaseKey:_PRODUCTS_MAPPING[key] value:product[key]];
                     }
                 }
@@ -242,7 +242,7 @@
     else {
         NSMutableDictionary *productBundle = [[NSMutableDictionary alloc] init];
         for (NSString *key in _PRODUCTS_MAPPING) {
-            if (properties[key]) {
+            if (![self isEmpty:properties[key]]) {
                 [self putProductValue:productBundle firebaseKey:_PRODUCTS_MAPPING[key] value:properties[key]];
             }
         }
@@ -282,8 +282,11 @@
 }
 
 - (void) attachAllCustomProperties: (NSMutableDictionary *) params properties: (NSDictionary *) properties {
-    if(properties != nil &&  [properties count] && params != nil) {
+    if(![self isEmpty:properties] && params != nil) {
         for (NSString *key in [properties keyEnumerator]) {
+            if ([self isEmpty:properties[key]]) {
+                continue;
+            }
             NSString* firebaseKey = [[[key lowercaseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
             if([firebaseKey length] > 40) { // 40: maximum supported key length by Firebase
                 firebaseKey = [firebaseKey substringToIndex:[@40 unsignedIntegerValue]];
@@ -301,6 +304,22 @@
             }
         }
     }
+}
+
+-(BOOL) isEmpty:(NSObject *) value {
+    if (value == nil) {
+        return true;
+    }
+    if ([value isKindOfClass:[NSString class]]) {
+        return [(NSString *)value isEqualToString:@""];
+    }
+    if ([value isKindOfClass:[NSDictionary class]]) {
+        return [(NSDictionary *)value count] == 0;
+    }
+    if ([value isKindOfClass:[NSMutableDictionary class]]) {
+        return [(NSMutableDictionary *)value count] == 0;
+    }
+    return false;
 }
 
 - (void)reset {
