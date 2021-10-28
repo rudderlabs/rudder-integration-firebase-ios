@@ -26,9 +26,9 @@ extern NSArray const* EVENT_WITH_PRODUCTS;
 extern NSDictionary const* ECOMMERCE_PROPERTY_MAPPING;
 
 - (id)init;
--(BOOL) isEmpty:(NSObject *) value;
--(NSString *) getTrimKey:(NSString *) key;
--(BOOL) isNumber:(NSObject *)value;
++(BOOL) isEmpty:(NSObject *) value;
++(NSString *) getTrimKey:(NSString *) key;
++(BOOL) isNumber:(NSObject *)value;
 
 @end
 

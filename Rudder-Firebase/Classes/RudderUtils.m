@@ -90,7 +90,7 @@ NSDictionary *ECOMMERCE_PROPERTY_MAPPING;
     return self;
 }
 
--(NSString *) getTrimKey:(NSString *) key {
++(NSString *) getTrimKey:(NSString *) key {
     NSString * event = [[[key lowercaseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
     NSUInteger trimLength = [@40 unsignedIntegerValue];
     if([event length] > trimLength) {
@@ -99,7 +99,7 @@ NSDictionary *ECOMMERCE_PROPERTY_MAPPING;
     return event;
 }
 
--(BOOL) isEmpty:(NSObject *) value {
++(BOOL) isEmpty:(NSObject *) value {
     if (value == nil) {
         return true;
     }
@@ -115,7 +115,7 @@ NSDictionary *ECOMMERCE_PROPERTY_MAPPING;
     return false;
 }
 
--(BOOL) isNumber:(NSObject *)value {
++(BOOL) isNumber:(NSObject *)value {
     if ([value isKindOfClass:[NSNumber class]]) {
         return true;
     }
