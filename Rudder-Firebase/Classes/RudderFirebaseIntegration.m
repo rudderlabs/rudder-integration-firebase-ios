@@ -222,7 +222,8 @@
 }
 
 - (void)reset {
-    // Firebase doesn't support reset functionality
+    [FIRAnalytics setUserID:nil];
+    [RSLogger logDebug:@"Reset: FIRAnalytics setUserID:nil"];
 }
 
 - (void)flush {
