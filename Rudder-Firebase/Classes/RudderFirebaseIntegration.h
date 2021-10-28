@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Rudder/Rudder.h>
+#import "RudderUtils.h"
 
 @import FirebaseCore;
 @import FirebaseAnalytics;
@@ -15,13 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RudderFirebaseIntegration : NSObject<RSIntegration>
 
-@property NSArray* GOOGLE_RESERVED_KEYWORDS;
-@property NSArray* RESERVED_PARAM_NAMES;
-@property NSDictionary *EVENTS_MAPPING;
-@property NSDictionary *PRODUCTS_MAPPING;
-@property NSArray *PRODUCT_EVENT;
-
 - (instancetype)initWithConfig:(NSDictionary *)config withAnalytics:(RSClient *)client withRudderConfig:(RSConfig*) rudderConfig;
+
+@property (strong) RudderUtils *rudderUtils;
 
 @end
 
