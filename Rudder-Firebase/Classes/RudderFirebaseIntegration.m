@@ -92,8 +92,10 @@
                         if ([eventName isEqualToString:ECommProductShared]) {
                             [params setValue:@"product" forKey:kFIRParameterContentType];
                         }
-                        if ([firebaseEvent isEqualToString:kFIREventSelectContent] && ![RudderUtils isEmpty:properties[@"product_id"]]) {
-                            [params setValue:properties[@"product_id"] forKey:kFIRParameterItemID];
+                        if ([firebaseEvent isEqualToString:kFIREventSelectContent]) {
+                            if (![RudderUtils isEmpty:properties[@"product_id"]]) {
+                                [params setValue:properties[@"product_id"] forKey:kFIRParameterItemID];
+                            }
                             [params setValue:@"product" forKey:kFIRParameterContentType];
                         }
                         if ([eventName isEqualToString:ECommCartShared]) {
