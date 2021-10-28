@@ -90,8 +90,9 @@ NSDictionary *ECOMMERCE_PROPERTY_MAPPING;
     return self;
 }
 
--(NSString *) getTrimStringKey:(NSString *) key maxLength:(NSUInteger)trimLength {
+-(NSString *) getTrimKey:(NSString *) key {
     NSString * event = [[[key lowercaseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    NSUInteger trimLength = [@40 unsignedIntegerValue];
     if([event length] > trimLength) {
         event = [event substringToIndex:trimLength];
     }

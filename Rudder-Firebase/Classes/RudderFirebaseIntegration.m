@@ -49,7 +49,7 @@
             if (traits != nil) {
                 for (NSString *key in [traits keyEnumerator]) {
                     if([key isEqualToString:@"userId"]) continue;
-                    NSString* firebaseKey = [_rudderUtils getTrimStringKey:key maxLength:[@24 unsignedIntegerValue]];
+                    NSString* firebaseKey = [_rudderUtils getTrimKey:key];
                     if (![IDENTIFY_RESERVED_KEYWORDS containsObject:firebaseKey]) {
                         [RSLogger logDebug:[NSString stringWithFormat:@"Setting userProperty to Firebase: %@", firebaseKey]];
                         [FIRAnalytics setUserPropertyString:traits[key] forName:firebaseKey];
@@ -101,7 +101,7 @@
                 }
                 // Custom track event
                 else {
-                    firebaseEvent = [_rudderUtils getTrimStringKey:eventName maxLength:[@40 unsignedIntegerValue]];
+                    firebaseEvent = [_rudderUtils getTrimKey:eventName];
                 }
                 if (![_rudderUtils isEmpty:firebaseEvent]) {
                     [self attachAllCustomProperties:params properties:properties];
@@ -197,7 +197,7 @@
 - (void) attachAllCustomProperties: (NSMutableDictionary *) params properties: (NSDictionary *) properties {
     if(![_rudderUtils isEmpty:properties] && params != nil) {
         for (NSString *key in [properties keyEnumerator]) {
-            NSString* firebaseKey = [_rudderUtils getTrimStringKey:key maxLength:[@40 unsignedIntegerValue]];
+            NSString* firebaseKey = [_rudderUtils getTrimKey:key];
             id value = properties[key];
             if ([TRACK_RESERVED_KEYWORDS containsObject:firebaseKey] || [_rudderUtils isEmpty:value]) {
                 continue;

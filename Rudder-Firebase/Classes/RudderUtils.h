@@ -27,7 +27,7 @@ extern NSDictionary const* ECOMMERCE_PROPERTY_MAPPING;
 
 - (id)init;
 -(BOOL) isEmpty:(NSObject *) value;
--(NSString *) getTrimStringKey:(NSString *) key maxLength:(NSUInteger)trimLength;
+-(NSString *) getTrimKey:(NSString *) key;
 -(BOOL) isNumber:(NSObject *)value;
 
 @end
