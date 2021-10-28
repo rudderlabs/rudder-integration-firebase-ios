@@ -62,7 +62,6 @@ NSDictionary *ECOMMERCE_PROPERTY_MAPPING;
                                kFIREventPurchase,
                                kFIREventRefund,
                                kFIREventViewCart,
-                               kFIREventSelectContent,
                                nil];
         
         ECOMMERCE_PROPERTY_MAPPING = @{
