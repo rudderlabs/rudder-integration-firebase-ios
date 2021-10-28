@@ -316,9 +316,6 @@
     if ([value isKindOfClass:[NSDictionary class]]) {
         return [(NSDictionary *)value count] == 0;
     }
-    if ([value isKindOfClass:[NSMutableDictionary class]]) {
-        return [(NSMutableDictionary *)value count] == 0;
-    }
     return false;
 }
 
