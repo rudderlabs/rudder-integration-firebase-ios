@@ -17,67 +17,62 @@ NSArray *EVENT_WITH_PRODUCTS;
 NSDictionary *ECOMMERCE_PROPERTY_MAPPING;
 
 + (void)initialize {
+    IDENTIFY_RESERVED_KEYWORDS =  [[NSArray alloc] initWithObjects:@"age", @"gender", @"interest", nil];
     
-    if(!IDENTIFY_RESERVED_KEYWORDS) {
-        IDENTIFY_RESERVED_KEYWORDS =  [[NSArray alloc] initWithObjects:@"age", @"gender", @"interest", nil];
-        TRACK_RESERVED_KEYWORDS = [[NSArray alloc] initWithObjects:@"product_id", @"name", @"category", @"quantity", @"price", @"currency", @"value", @"revenue", @"total", @"order_id", @"tax", @"shipping", @"coupon", @"cart_id", @"payment_method", @"query", @"list_id", @"promotion_id", @"creative", @"affiliation", @"share_via", @"products", kFIRParameterScreenName, kFIREventScreenView,
-                                                  nil];
-        
-        ECOMMERCE_EVENTS_MAPPING = @{
-            ECommPaymentInfoEntered : kFIREventAddPaymentInfo,
-            ECommProductAdded : kFIREventAddToCart,
-            ECommProductAddedToWishList : kFIREventAddToWishlist,
-            ECommCheckoutStarted : kFIREventBeginCheckout,
-            ECommOrderCompleted : kFIREventPurchase,
-            ECommOrderRefunded : kFIREventRefund,
-            ECommProductsSearched : kFIREventSearch,
-            ECommCartShared : kFIREventShare,
-            ECommProductShared : kFIREventShare,
-            ECommProductViewed : kFIREventViewItem,
-            ECommProductListViewed : kFIREventViewItemList,
-            ECommProductRemoved : kFIREventRemoveFromCart,
-            ECommProductClicked : kFIREventSelectContent,
-            ECommPromotionViewed : kFIREventViewPromotion,
-            ECommPromotionClicked : kFIREventSelectPromotion,
-            ECommCartViewed : kFIREventViewCart
-        };
+    TRACK_RESERVED_KEYWORDS = [[NSArray alloc] initWithObjects:@"product_id", @"name", @"category", @"quantity", @"price", @"currency", @"value", @"revenue", @"total", @"order_id", @"tax", @"shipping", @"coupon", @"cart_id", @"payment_method", @"query", @"list_id", @"promotion_id", @"creative", @"affiliation", @"share_via", @"products", kFIRParameterScreenName, nil];
+    
+    ECOMMERCE_EVENTS_MAPPING = @{
+        ECommPaymentInfoEntered : kFIREventAddPaymentInfo,
+        ECommProductAdded : kFIREventAddToCart,
+        ECommProductAddedToWishList : kFIREventAddToWishlist,
+        ECommCheckoutStarted : kFIREventBeginCheckout,
+        ECommOrderCompleted : kFIREventPurchase,
+        ECommOrderRefunded : kFIREventRefund,
+        ECommProductsSearched : kFIREventSearch,
+        ECommCartShared : kFIREventShare,
+        ECommProductShared : kFIREventShare,
+        ECommProductViewed : kFIREventViewItem,
+        ECommProductListViewed : kFIREventViewItemList,
+        ECommProductRemoved : kFIREventRemoveFromCart,
+        ECommProductClicked : kFIREventSelectContent,
+        ECommPromotionViewed : kFIREventViewPromotion,
+        ECommPromotionClicked : kFIREventSelectPromotion,
+        ECommCartViewed : kFIREventViewCart
+    };
 
-        PRODUCT_PROPERTIES_MAPPING = @{
-            @"product_id" : kFIRParameterItemID,
-            @"id" : kFIRParameterItemID,
-            @"name" : kFIRParameterItemName,
-            @"category" : kFIRParameterItemCategory,
-            @"quantity" : kFIRParameterQuantity,
-            @"price" : kFIRParameterPrice
-        };
+    PRODUCT_PROPERTIES_MAPPING = @{
+        @"product_id" : kFIRParameterItemID,
+        @"id" : kFIRParameterItemID,
+        @"name" : kFIRParameterItemName,
+        @"category" : kFIRParameterItemCategory,
+        @"quantity" : kFIRParameterQuantity,
+        @"price" : kFIRParameterPrice
+    };
 
-        EVENT_WITH_PRODUCTS = [[NSArray alloc] initWithObjects:
-                               kFIREventAddPaymentInfo,
-                               kFIREventAddToCart,
-                               kFIREventAddToWishlist,
-                               kFIREventBeginCheckout,
-                               kFIREventRemoveFromCart,
-                               kFIREventViewItem,
-                               kFIREventViewItemList,
-                               kFIREventPurchase,
-                               kFIREventRefund,
-                               kFIREventViewCart,
-                               nil];
-        
-        ECOMMERCE_PROPERTY_MAPPING = @{
-            @"payment_method" : kFIRParameterPaymentType,
-            @"coupon" : kFIRParameterCoupon,
-            @"query" : kFIRParameterSearchTerm,
-            @"list_id" : kFIRParameterItemListID,
-            @"promotion_id" : kFIRParameterPromotionID,
-            @"creative" : kFIRParameterCreativeName,
-            @"affiliation" : kFIRParameterAffiliation,
-            @"order_id" : kFIRParameterTransactionID,
-            @"share_via" : kFIRParameterMethod
-        };;
-
-    }
-        
+    EVENT_WITH_PRODUCTS = [[NSArray alloc] initWithObjects:
+                           kFIREventAddPaymentInfo,
+                           kFIREventAddToCart,
+                           kFIREventAddToWishlist,
+                           kFIREventBeginCheckout,
+                           kFIREventRemoveFromCart,
+                           kFIREventViewItem,
+                           kFIREventViewItemList,
+                           kFIREventPurchase,
+                           kFIREventRefund,
+                           kFIREventViewCart,
+                           nil];
+    
+    ECOMMERCE_PROPERTY_MAPPING = @{
+        @"payment_method" : kFIRParameterPaymentType,
+        @"coupon" : kFIRParameterCoupon,
+        @"query" : kFIRParameterSearchTerm,
+        @"list_id" : kFIRParameterItemListID,
+        @"promotion_id" : kFIRParameterPromotionID,
+        @"creative" : kFIRParameterCreativeName,
+        @"affiliation" : kFIRParameterAffiliation,
+        @"order_id" : kFIRParameterTransactionID,
+        @"share_via" : kFIRParameterMethod
+    };
 }
 
 - (id)init {
@@ -85,7 +80,6 @@ NSDictionary *ECOMMERCE_PROPERTY_MAPPING;
     if (self) {
         // Initialization code here.
     }
-
     return self;
 }
 
