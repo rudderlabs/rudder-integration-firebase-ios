@@ -43,7 +43,6 @@ NSArray *EVENT_WITH_PRODUCTS_AT_ROOT;
 
     PRODUCT_PROPERTIES_MAPPING = @{
         @"product_id" : kFIRParameterItemID,
-        @"id" : kFIRParameterItemID,
         @"name" : kFIRParameterItemName,
         @"category" : kFIRParameterItemCategory,
         @"quantity" : kFIRParameterQuantity,
