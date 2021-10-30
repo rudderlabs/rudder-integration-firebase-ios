@@ -128,9 +128,11 @@
     } else if (![RudderUtils isEmpty:properties[@"total"]] && [RudderUtils isNumber:properties[@"total"]]) {
         [params setValue:[NSNumber numberWithDouble:[properties[@"total"] doubleValue]] forKey:kFIRParameterValue];
     }
-    // Handle Products array for allowed events
-    if ([EVENT_WITH_PRODUCTS containsObject:firebaseEvent]) {
-        [self handleProducts:params properties:properties];
+    if ([EVENT_WITH_PRODUCTS_ARRAY containsObject:firebaseEvent] && ![RudderUtils isEmpty:properties[@"products"]]) {
+        [self handleProducts:params properties:properties isProductsArray:YES];
+    }
+    if ([EVENT_WITH_PRODUCTS_AT_ROOT containsObject:firebaseEvent]) {
+        [self handleProducts:params properties:properties isProductsArray:NO];
     }
     if (![RudderUtils isEmpty:properties[@"currency"]]) {
         [params setValue:[NSString stringWithFormat:@"%@", properties[@"currency"]] forKey:kFIRParameterCurrency];
@@ -150,10 +152,10 @@
     }
 }
 
--(void) handleProducts:(NSMutableDictionary *) params properties: (NSDictionary *) properties {
+-(void) handleProducts:(NSMutableDictionary *) params properties: (NSDictionary *) properties isProductsArray:(BOOL) isProductsArray{
+    NSMutableArray *mappedProduct;
     // If Products array is present
-    if (![RudderUtils isEmpty:properties[@"products"]]){
-        NSMutableArray *mappedProduct;
+    if (isProductsArray){
         NSDictionary *products = [properties objectForKey:@"products"];
         if ([products isKindOfClass:[NSArray class]]) {
             mappedProduct = [[NSMutableArray alloc] init];
@@ -165,9 +167,16 @@
                 }
             }
         }
-        if (![RudderUtils isEmpty:mappedProduct]) {
-            [params setValue:mappedProduct forKey:kFIRParameterItems];
-        }
+    }
+    // If product is present at the root level
+    else {
+        NSMutableDictionary *productBundle = [[NSMutableDictionary alloc] init];
+        [self putProductValue:productBundle properties:properties];
+        mappedProduct = [[NSMutableArray alloc] init];
+        [mappedProduct addObject:productBundle];
+    }
+    if (![RudderUtils isEmpty:mappedProduct]) {
+        [params setValue:mappedProduct forKey:kFIRParameterItems];
     }
 }
 

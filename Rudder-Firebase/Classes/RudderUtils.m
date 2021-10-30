@@ -13,8 +13,9 @@ NSArray * IDENTIFY_RESERVED_KEYWORDS;
 NSArray *TRACK_RESERVED_KEYWORDS;
 NSDictionary *ECOMMERCE_EVENTS_MAPPING;
 NSDictionary *PRODUCT_PROPERTIES_MAPPING;
-NSArray *EVENT_WITH_PRODUCTS;
+NSArray *EVENT_WITH_PRODUCTS_ARRAY;
 NSDictionary *ECOMMERCE_PROPERTY_MAPPING;
+NSArray *EVENT_WITH_PRODUCTS_AT_ROOT;
 
 + (void)initialize {
     IDENTIFY_RESERVED_KEYWORDS =  [[NSArray alloc] initWithObjects:@"age", @"gender", @"interest", nil];
@@ -49,18 +50,20 @@ NSDictionary *ECOMMERCE_PROPERTY_MAPPING;
         @"price" : kFIRParameterPrice
     };
 
-    EVENT_WITH_PRODUCTS = [[NSArray alloc] initWithObjects:
-                           kFIREventAddPaymentInfo,
-                           kFIREventAddToCart,
-                           kFIREventAddToWishlist,
-                           kFIREventBeginCheckout,
-                           kFIREventRemoveFromCart,
-                           kFIREventViewItem,
-                           kFIREventViewItemList,
-                           kFIREventPurchase,
-                           kFIREventRefund,
-                           kFIREventViewCart,
-                           nil];
+    EVENT_WITH_PRODUCTS_ARRAY = [[NSArray alloc] initWithObjects:
+                                 kFIREventBeginCheckout,
+                                 kFIREventPurchase,
+                                 kFIREventRefund,
+                                 kFIREventViewItemList,
+                                 kFIREventViewCart,
+                                 nil];
+    
+    EVENT_WITH_PRODUCTS_AT_ROOT = [[NSArray alloc] initWithObjects:
+                                   kFIREventAddToCart,
+                                   kFIREventAddToWishlist,
+                                   kFIREventViewItem,
+                                   kFIREventRemoveFromCart,
+                                   nil];
     
     ECOMMERCE_PROPERTY_MAPPING = @{
         @"payment_method" : kFIRParameterPaymentType,
