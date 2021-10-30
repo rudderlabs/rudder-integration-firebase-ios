@@ -128,14 +128,14 @@
     } else if (![RudderUtils isEmpty:properties[@"total"]] && [RudderUtils isNumber:properties[@"total"]]) {
         [params setValue:[NSNumber numberWithDouble:[properties[@"total"] doubleValue]] forKey:kFIRParameterValue];
     }
-    // Handle Products array or Product at the root level for allowed events
+    // Handle Products array for allowed events
     if ([EVENT_WITH_PRODUCTS containsObject:firebaseEvent]) {
         [self handleProducts:params properties:properties];
     }
     if (![RudderUtils isEmpty:properties[@"currency"]]) {
         [params setValue:[NSString stringWithFormat:@"%@", properties[@"currency"]] forKey:kFIRParameterCurrency];
     } else {
-        [params setValue:properties[@"currency"] forKey:@"USD"];
+        [params setValue:@"USD" forKey:kFIRParameterCurrency];
     }
     for (NSString *propertyKey in properties) {
         if (ECOMMERCE_PROPERTY_MAPPING[propertyKey] && ![RudderUtils isEmpty:properties[propertyKey]]) {
@@ -151,9 +151,9 @@
 }
 
 -(void) handleProducts:(NSMutableDictionary *) params properties: (NSDictionary *) properties {
-    NSMutableArray *mappedProduct;
     // If Products array is present
     if (![RudderUtils isEmpty:properties[@"products"]]){
+        NSMutableArray *mappedProduct;
         NSDictionary *products = [properties objectForKey:@"products"];
         if ([products isKindOfClass:[NSArray class]]) {
             mappedProduct = [[NSMutableArray alloc] init];
@@ -165,16 +165,9 @@
                 }
             }
         }
-    }
-    // If product is present at the root level
-    else {
-        NSMutableDictionary *productBundle = [[NSMutableDictionary alloc] init];
-        [self putProductValue:productBundle properties:properties];
-        mappedProduct = [[NSMutableArray alloc] init];
-        [mappedProduct addObject:productBundle];
-    }
-    if (![RudderUtils isEmpty:mappedProduct]) {
-        [params setValue:mappedProduct forKey:kFIRParameterItems];
+        if (![RudderUtils isEmpty:mappedProduct]) {
+            [params setValue:mappedProduct forKey:kFIRParameterItems];
+        }
     }
 }
 
