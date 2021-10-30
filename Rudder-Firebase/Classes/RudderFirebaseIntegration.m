@@ -61,6 +61,7 @@
                 return;
             }
             params = [[NSMutableDictionary alloc] init];
+            properties = message.properties;
             [params setValue:screenName forKey:kFIRParameterScreenName];
             [self attachAllCustomProperties:params properties:properties];
             [FIRAnalytics logEventWithName:kFIREventScreenView parameters:params];
