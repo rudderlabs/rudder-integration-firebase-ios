@@ -220,10 +220,10 @@
                 [params setValue:value forKey:firebaseKey];
             } else {
                 NSString *convertedString = [NSString stringWithFormat:@"%@", value];
-                if ([convertedString length] > 100) {
-                    convertedString = [convertedString substringToIndex:[@100 unsignedIntegerValue]];
+                // if length exceeds 100, don't send the property
+                if ([convertedString length] <= 100) {
+                    [params setValue:convertedString forKey:firebaseKey];
                 }
-                [params setValue:convertedString forKey:firebaseKey];
             }
         }
     }
