@@ -531,9 +531,11 @@
 			baseConfigurationReference = 723DD94007D2FB2F88F78C89 /* Pods-Rudder-Firebase_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CURRENT_PROJECT_VERSION = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Rudder-Firebase/Rudder-Firebase-Prefix.pch";
 				INFOPLIST_FILE = "Rudder-Firebase/Rudder-Firebase-Info.plist";
+				MARKETING_VERSION = 2.0.4;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.integration.test.firebase.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -547,9 +549,11 @@
 			baseConfigurationReference = 9A4FBB576AF0638413D5EBA0 /* Pods-Rudder-Firebase_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CURRENT_PROJECT_VERSION = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Rudder-Firebase/Rudder-Firebase-Prefix.pch";
 				INFOPLIST_FILE = "Rudder-Firebase/Rudder-Firebase-Info.plist";
+				MARKETING_VERSION = 2.0.4;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rudderstack.integration.test.firebase.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
