@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>333506983761-qknj5phqbrj1ce95abeqf3u4k4jcpkst.apps.googleusercontent.com</string>
+	<string>626907923363-vrp8bfh69h1e36eetshab8d84boujpft.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.333506983761-qknj5phqbrj1ce95abeqf3u4k4jcpkst</string>
+	<string>com.googleusercontent.apps.626907923363-vrp8bfh69h1e36eetshab8d84boujpft</string>
 	<key>API_KEY</key>
-	<string>AIzaSyClIJcnpa1uZKInxTEBRjsHsAWf3rR8YUk</string>
+	<string>AIzaSyDyeG0i7mBs_APYZDliYosb8M5pb8bbgb8</string>
 	<key>GCM_SENDER_ID</key>
-	<string>333506983761</string>
+	<string>626907923363</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.rudderstack.integration.test.firebase.ios</string>
 	<key>PROJECT_ID</key>
-	<string>fir-testingproject-b639c</string>
+	<string>iosfirebase-d3f8d</string>
 	<key>STORAGE_BUCKET</key>
-	<string>fir-testingproject-b639c.appspot.com</string>
+	<string>iosfirebase-d3f8d.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:333506983761:ios:fde0c50272356624188570</string>
-	<key>DATABASE_URL</key>
-	<string>https://fir-testingproject-b639c.firebaseio.com</string>
+	<string>1:626907923363:ios:7c543cd20765cf34305016</string>
 </dict>
 </plist>
