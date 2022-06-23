@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Rudder-Firebase'
-  s.version          = '2.0.5'
+  s.version          = '2.0.6'
   s.summary          = 'Privacy and Security focused Segment-alternative. Firebase Native SDK integration support.'
 
   s.description      = <<-DESC
