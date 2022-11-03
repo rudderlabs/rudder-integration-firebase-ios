@@ -151,6 +151,12 @@
     if (![RudderUtils isEmpty:properties[@"tax"]] && [RudderUtils isNumber:properties[@"tax"]]) {
         [params setValue:[NSNumber numberWithDouble:[properties[@"tax"] doubleValue]] forKey:kFIRParameterTax];
     }
+    // order_id is being mapped to FirebaseAnalytics.Param.TRANSACTION_ID.
+    if (![RudderUtils isEmpty:properties[@"order_id"]]) {
+        [params setValue:[NSString stringWithFormat:@"%@", properties[@"order_id"]] forKey:kFIRParameterTransactionID];
+        // As this change is made at version 2.0.6. So to have the backward compatibility, we're inserting order_id properties as well.
+        [params setValue:[NSString stringWithFormat:@"%@", properties[@"order_id"]] forKey:@"order_id"];
+    }
 }
 
 -(void) handleProducts:(NSMutableDictionary *) params properties: (NSDictionary *) properties isProductsArray:(BOOL) isProductsArray{
