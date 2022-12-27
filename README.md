@@ -11,14 +11,14 @@ Questions? Please join our [Slack channel](https://resources.rudderstack.com/joi
 
 ## Integrating Firebase with the RudderStack iOS SDK
 
-> **_NOTE:_** `Rudder-Firebase` version `2.0.6` is compatible with the `Firebase/Analytics` version `8.15.0`. 
+> **_NOTE:_** `Rudder-Firebase` version `3.0.0` is compatible with the `FirebaseAnalytics` version `10.3.0`. 
 
 1. Add [Firebase](http://firebase.google.com) as a destination in the [RudderStack dashboard](https://app.rudderstack.com/).
 
 2. Rudder-Firebase is available through [CocoaPods](https://cocoapods.org). To install it, add the following line to your Podfile and followed by `pod install`:
 
 ```ruby
-pod 'Rudder-Firebase', '~> 2.0.6'
+pod 'Rudder-Firebase', '~> 3.0.0'
 ```
 
 3. Download the `GoogleService-Info.plist` from your Firebase console and put it in your project.
