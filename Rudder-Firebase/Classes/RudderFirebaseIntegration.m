@@ -70,7 +70,7 @@
                 return;
             }
             if ([eventName isEqualToString:@"Application Opened"]) {
-                [self handleApplicationOpenedEvent];
+                [self handleApplicationOpenedEvent:message.properties];
             }
             else if (ECOMMERCE_EVENTS_MAPPING[eventName]){
                 [self handleECommerceEvent:eventName properties:message.properties];
@@ -84,10 +84,10 @@
     }
 }
 
--(void) handleApplicationOpenedEvent {
+-(void) handleApplicationOpenedEvent: (NSDictionary *) properties  {
     NSString *firebaseEvent = kFIREventAppOpen;
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [self makeFirebaseEvent: firebaseEvent params:params properties:nil];
+    [self makeFirebaseEvent: firebaseEvent params:params properties:properties];
 }
 
 -(void) handleECommerceEvent: (NSString *) eventName properties: (NSDictionary *) properties {
