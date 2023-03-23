@@ -23,12 +23,9 @@ RSClient *client;
 	// Do any additional setup after loading the view, typically from a nib.
 
     client = [RSClient sharedInstance];
-    [self identify];
-    [self checkoutStartedEvent];
-//    [self sendECommerceCustomAndScreenEvents];
 }
 
--(void) identify {
+- (IBAction)identify:(id)sender {
     NSMutableDictionary<NSString *,NSObject *> *traits = [[NSMutableDictionary alloc] init];
     [traits setValue:@"random@example.com" forKey:@"email"];
     [traits setValue:@"FirstName" forKey:@"fname"];
@@ -37,42 +34,15 @@ RSClient *client;
     [client identify:@"iOS User 1" traits:traits];
 }
 
--(void) sendECommerceCustomAndScreenEvents {
-    [self checkoutStartedEvent];
-    [self orderCompletedEvent];
-    [self orderRefundedEvent];
-    [self productListViewedEvent];
-    [self cartViewEvent];
-
-    [self productAddedEvent];
-    [self productAddedToWishlistEvent];
-    [self productViewedEvent];
-    [self productRemovedEvent];
-
-    [self paymentInfoEnteredEvent];
-    [self productsSearchedEvent];
-    [self cartSharedEvent];
-    [self productSharedEvent];
-    [self productClickedEvent];
-    [self promotionViewedEvent];
-    [self promotionClickedEvent];
-
-    [self customTrackEventWithoutProperties];
-    [self customTrackEventWithProperties];
-    [self screenEventWithoutProperties];
-    [self screenEventWithProperties];
-}
-
 // Events with multiple products array
-
--(void) checkoutStartedEvent {
+- (IBAction)checkoutStartedEvent:(id)sender {
     NSMutableDictionary<NSString *,NSObject *> *properties = [[NSMutableDictionary alloc] initWithDictionary:[self getStandardAndCustomProperties]];
     [properties setValue:[self getMultipleProducts] forKey:@"products"];
     
     [client track:@"Checkout Started" properties:properties];
 }
 
--(void) orderCompletedEvent {
+- (IBAction)orderCompletedEvent:(id)sender {
     NSMutableDictionary<NSString *,NSObject *> *properties = [[NSMutableDictionary alloc] initWithDictionary:[self getStandardAndCustomProperties]];
     [properties setValue:[self getMultipleProducts] forKey:@"products"];
     [client track:@"Order Completed" properties:properties];
@@ -80,25 +50,25 @@ RSClient *client;
     properties = [[NSMutableDictionary alloc] init];
     [properties setValue:@(200) forKey:@"value"];
     [client track:@"Order Completed" properties:properties];
-
+    
     properties = [[NSMutableDictionary alloc] init];
     [properties setValue:@(300) forKey:@"total"];
     [client track:@"Order Completed" properties:properties];
 }
 
--(void) orderRefundedEvent {
+- (IBAction)orderRefundedEvent:(id)sender {
     NSMutableDictionary<NSString *,NSObject *> *properties = [[NSMutableDictionary alloc] initWithDictionary:[self getStandardAndCustomProperties]];
     [properties setValue:[self getMultipleProducts] forKey:@"products"];
     [client track:@"Order Refunded" properties:properties];
 }
 
--(void) productListViewedEvent {
+- (IBAction)productListViewedEvent:(id)sender {
     NSMutableDictionary<NSString *,NSObject *> *properties = [[NSMutableDictionary alloc] initWithDictionary:[self getStandardAndCustomProperties]];
     [properties setValue:[self getMultipleProducts] forKey:@"products"];
     [client track:@"Product List Viewed" properties:properties];
 }
 
--(void) cartViewEvent {
+- (IBAction)cartViewedEvent:(id)sender {
     NSMutableDictionary<NSString *,NSObject *> *properties = [[NSMutableDictionary alloc] initWithDictionary:[self getStandardAndCustomProperties]];
     [properties setValue:[self getMultipleProducts] forKey:@"products"];
     [client track:@"Cart Viewed" properties:properties];
@@ -106,33 +76,32 @@ RSClient *client;
 
 // Events with single products array
 
--(void) productAddedEvent {
+- (IBAction)productAddedEvent:(id)sender {
     [client track:@"Product Added" properties:[self getStandardCustomAndProductAtRoot]];
 }
 
--(void) productAddedToWishlistEvent {
+- (IBAction)productAddedToWishlistEvent:(id)sender {
     [client track:@"Product Added to Wishlist" properties:[self getStandardCustomAndProductAtRoot]];
 }
 
--(void) productViewedEvent {
+- (IBAction)productViewedEvent:(id)sender {
     [client track:@"Product Viewed" properties:[self getStandardCustomAndProductAtRoot]];
 }
 
--(void) productRemovedEvent {
+- (IBAction)productRemovedEvent:(id)sender {
     [client track:@"Product Removed" properties:[self getStandardCustomAndProductAtRoot]];
 }
 
 // Events without products properties
-
--(void) paymentInfoEnteredEvent {
+- (IBAction)paymentInfoEnteredEvent:(id)sender {
     [client track:@"Payment Info Entered" properties:[self getStandardAndCustomProperties]];
 }
 
--(void) productsSearchedEvent {
+- (IBAction)productsSearchedEvent:(id)sender {
     [client track:@"Products Searched" properties:[self getStandardAndCustomProperties]];
 }
 
--(void) cartSharedEvent {
+- (IBAction)cartSharedEvent:(id)sender {
     NSMutableDictionary<NSString *,NSObject *> *properties = [[NSMutableDictionary alloc] initWithDictionary:[self getStandardAndCustomProperties]];
     [properties setValue:@"item value - 1" forKey:@"cart_id"];
     [client track:@"Cart Shared" properties:properties];
@@ -142,7 +111,7 @@ RSClient *client;
     [client track:@"Cart Shared" properties:properties];
 }
 
--(void) productSharedEvent {
+- (IBAction)productSharedEvent:(id)sender {
     NSMutableDictionary<NSString *,NSObject *> *properties = [[NSMutableDictionary alloc] initWithDictionary:[self getStandardAndCustomProperties]];
     [properties setValue:@"item value - 1" forKey:@"cart_id"];
     [client track:@"Product Shared" properties:properties];
@@ -152,19 +121,19 @@ RSClient *client;
     [client track:@"Product Shared" properties:properties];
 }
 
--(void) productClickedEvent {
+- (IBAction)productClickedEvent:(id)sender {
     NSMutableDictionary<NSString *,NSObject *> *properties = [[NSMutableDictionary alloc] initWithDictionary:[self getStandardAndCustomProperties]];
     [properties setValue:@"Item id - 1" forKey:@"product_id"];
     [client track:@"Product Clicked" properties:properties];
 }
 
--(void) promotionViewedEvent {
+- (IBAction)promotionViewedEvent:(id)sender {
     NSMutableDictionary<NSString *,NSObject *> *properties = [[NSMutableDictionary alloc] initWithDictionary:[self getStandardAndCustomProperties]];
     [properties setValue:@"promotion name-1" forKey:@"name"];
     [client track:@"Promotion Viewed" properties:properties];
 }
 
--(void) promotionClickedEvent {
+- (IBAction)promotionClickedEvent:(id)sender {
     NSMutableDictionary<NSString *,NSObject *> *properties = [[NSMutableDictionary alloc] initWithDictionary:[self getStandardAndCustomProperties]];
     [properties setValue:@"promotion name-1" forKey:@"name"];
     [client track:@"Promotion Clicked" properties:properties];
@@ -228,21 +197,21 @@ RSClient *client;
 
 // Custom events
 
--(void) customTrackEventWithoutProperties {
+- (IBAction)customTrackEventWithoutProperties:(id)sender {
     [client track:@"Track Event 1"];
 }
 
--(void) customTrackEventWithProperties {
+- (IBAction)customTrackEventWithProperties:(id)sender {
     [client track:@"Track Event 2" properties:[self getCustomProperties]];
 }
 
 // Screen events
 
--(void) screenEventWithoutProperties {
+- (IBAction)screenEventWithoutProperties:(id)sender {
     [client screen:@"View Controller 1"];
 }
 
--(void) screenEventWithProperties {
+- (IBAction)screenEventWithProperties:(id)sender {
     [client screen:@"View Controller 2" properties:[self getCustomProperties]];
 }
 
