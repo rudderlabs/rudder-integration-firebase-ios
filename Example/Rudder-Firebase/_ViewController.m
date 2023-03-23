@@ -31,7 +31,7 @@ RSClient *client;
     [traits setValue:@"FirstName" forKey:@"fname"];
     [traits setValue:@"LastName" forKey:@"lname"];
     [traits setValue:@"1234567890" forKey:@"phone"];
-    [client identify:@"iOS User 1" traits:traits];
+    [client identify:@"i12345" traits:traits];
 }
 
 // Events with multiple products array
