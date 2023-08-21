@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>626907923363-vrp8bfh69h1e36eetshab8d84boujpft.apps.googleusercontent.com</string>
+	<string>968433633604-e1op728h2ih8mlifnavr77m078np0dnd.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.626907923363-vrp8bfh69h1e36eetshab8d84boujpft</string>
+	<string>com.googleusercontent.apps.968433633604-e1op728h2ih8mlifnavr77m078np0dnd</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDyeG0i7mBs_APYZDliYosb8M5pb8bbgb8</string>
+	<string>AIzaSyAvlwFAyiDF7SMQaPKUUTjn6B9vqn3-kF4</string>
 	<key>GCM_SENDER_ID</key>
-	<string>626907923363</string>
+	<string>968433633604</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.rudderstack.integration.test.firebase.ios</string>
+	<string>com.rudderstack.Sanity-iOS-v2</string>
 	<key>PROJECT_ID</key>
-	<string>iosfirebase-d3f8d</string>
+	<string>android-products-check</string>
 	<key>STORAGE_BUCKET</key>
-	<string>iosfirebase-d3f8d.appspot.com</string>
+	<string>android-products-check.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:626907923363:ios:7c543cd20765cf34305016</string>
+	<string>1:968433633604:ios:bff25699786ad9b6792f11</string>
 </dict>
 </plist>
