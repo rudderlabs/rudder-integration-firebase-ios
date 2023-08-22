@@ -2,9 +2,9 @@ require 'json'
 
 package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
 
-firebase_sdk_version = '~> 10.6.0'
-rudder_sdk_version = '~> 1.12'
-deployment_target = '11.0'
+firebase_sdk_version = '~> 10.13.0'
+rudder_sdk_version = '~> 1.18'
+deployment_target = '12.0'
 firebase_analytics = 'FirebaseAnalytics'
 
 Pod::Spec.new do |s|
