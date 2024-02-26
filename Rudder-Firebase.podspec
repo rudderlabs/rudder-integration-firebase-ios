@@ -2,8 +2,8 @@ require 'json'
 
 package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
 
-firebase_sdk_version = '~> 10.13.0'
-rudder_sdk_version = '~> 1.18'
+firebase_sdk_version = '~> 10.21.0'
+rudder_sdk_version = '~> 1.25'
 deployment_target = '12.0'
 firebase_analytics = 'FirebaseAnalytics'
 
