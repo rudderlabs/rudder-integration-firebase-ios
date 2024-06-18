@@ -11,7 +11,7 @@ Questions? Please join our [Slack channel](https://resources.rudderstack.com/joi
 
 ## Integrating Firebase with the RudderStack iOS SDK
 
-> **_NOTE:_** `Rudder-Firebase` version `3.3.0` is compatible with the `FirebaseAnalytics` version `10.3.0`. 
+> **_NOTE:_** `Rudder-Firebase` version `3.3.0` is compatible with the `FirebaseAnalytics` version `10.28.0`. 
 
 1. Add [Firebase](http://firebase.google.com) as a destination in the [RudderStack dashboard](https://app.rudderstack.com/).
 

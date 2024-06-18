@@ -84,7 +84,7 @@ PODS:
   - RSCrashReporter (1.0.1)
   - Rudder (1.25.2):
     - MetricsReporter (= 1.2.1)
-  - Rudder-Firebase (3.2.0):
+  - Rudder-Firebase (3.3.0):
     - FirebaseAnalytics (~> 10.21.0)
     - Rudder (~> 1.25)
   - RudderKit (1.4.0)
@@ -126,9 +126,9 @@ SPEC CHECKSUMS:
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   RSCrashReporter: 6b8376ac729b0289ebe0908553e5f56d8171f313
   Rudder: c6f6c7b266136c7d7990bccec40d2b0a3057abc6
-  Rudder-Firebase: 3e0b2f3695bfdfc0412dedda662ac11cb25b3c61
+  Rudder-Firebase: 8bb9a44cbc29ae066c0ada544b242199681547b9
   RudderKit: f272f9872183946452ac94cd7bb2244a71e6ca8f
 
 PODFILE CHECKSUM: c75d0a8fb8426b261d5f1319351cbc20d7692a7f
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2
