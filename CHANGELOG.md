@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 3.4.0 (2024-06-20)
+
+
+### Features
+
+* update firebase sdk to latest v10.28.0 ([#43](https://github.com/rudderlabs/rudder-integration-firebase-ios/issues/43)) ([336ac64](https://github.com/rudderlabs/rudder-integration-firebase-ios/commit/336ac6420ed1a6a749189b672bb3bbabbc9c96a0))
+
 ## 3.3.0 (2024-02-23)
 
 
