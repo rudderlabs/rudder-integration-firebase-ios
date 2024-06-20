@@ -2,7 +2,8 @@ require 'json'
 
 package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
 
-firebase_sdk_version = '~> 10.21.0'
+
+firebase_sdk_version = '~> 10.28.0'
 rudder_sdk_version = '~> 1.25'
 deployment_target = '12.0'
 firebase_analytics = 'FirebaseAnalytics'
@@ -16,7 +17,7 @@ Pod::Spec.new do |s|
   Rudder is a platform for collecting, storing and routing customer event data to dozens of tools. Rudder is open-source, can run in your cloud environment (AWS, GCP, Azure or even your data-centre) and provides a powerful transformation framework to process your event data on the fly.
                        DESC
   s.homepage         = 'https://github.com/rudderlabs/rudder-integration-firebase-ios'
-  s.license          = { :type => "Apache", :file => "LICENSE" }
+  s.license          = { :type => "Apache", :file => "LICENSE.md" }
   s.author           = { 'RudderStack' => 'arnab@rudderlabs.com' }
   s.source           = { :git => 'https://github.com/rudderlabs/rudder-integration-firebase-ios.git' , :tag => "v#{s.version}" }
   
