@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 3.5.0 (2024-11-05)
+
+
+### Features
+
+* bump the firebase to the latest v11.4.0 ([3f96286](https://github.com/rudderlabs/rudder-integration-firebase-ios/commit/3f962866e6423fcdd51ac480ee8252d99c724184))
+
 ## 3.4.0 (2024-06-20)
 
 
