@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 3.6.0 (2025-03-24)
+
+
+### Features
+
+* add SPM support ([#49](https://github.com/rudderlabs/rudder-integration-firebase-ios/issues/49)) ([2eaef54](https://github.com/rudderlabs/rudder-integration-firebase-ios/commit/2eaef5432bb1a4bf0106e95c1214e1b63872d133))
+
 ## 3.5.0 (2024-11-05)
 
 
