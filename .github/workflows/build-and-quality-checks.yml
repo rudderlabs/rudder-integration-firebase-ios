@@ -11,7 +11,12 @@ jobs:
     
     steps:
       - name: Checkout source branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@60606e260d2fc5762a71e64e74b2174e8ea3c8bd #v1
+        with:
+          xcode-version: '16.4'
         
       - name: Install Cocoapods
         run: gem install cocoapods
