@@ -13,7 +13,7 @@ let package = Package(
             targets: ["Rudder-Firebase"]),
     ],
     dependencies: [
-        .package(name: "Firebase", url: "https://github.com/firebase/firebase-ios-sdk", .exact("11.4.0")),
+        .package(name: "Firebase", url: "https://github.com/firebase/firebase-ios-sdk", .exact("11.15.0")),
         .package(name: "Rudder", url: "https://github.com/rudderlabs/rudder-sdk-ios", from: "1.0.0"),
     ],
 
