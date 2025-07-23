@@ -25,6 +25,7 @@ Pod::Spec.new do |s|
   s.source_files = 'Rudder-Firebase/Classes/**/*'
   s.static_framework = true
   s.ios.deployment_target = deployment_target
+  s.swift_versions = ['5.9']
   
   if defined?($FirebaseSDKVersion)
     firebase_sdk_version = $FirebaseSDKVersion
