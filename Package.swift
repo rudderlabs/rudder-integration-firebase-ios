@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "Rudder-Firebase",
     platforms: [
-        .iOS("12.0"), .tvOS("13.0")
+        .iOS("13.0")
     ],
     products: [
         .library(
