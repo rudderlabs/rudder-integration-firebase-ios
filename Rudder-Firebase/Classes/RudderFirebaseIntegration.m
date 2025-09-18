@@ -232,10 +232,8 @@
     for (NSString *key in [properties keyEnumerator]) {
         NSString* firebaseKey = [RudderUtils getTrimKey:key];
         id value = properties[key];
-        if (
-            (isECommerceEvent && [FIREBASE_TRACK_RESERVED_KEYWORDS containsObject:firebaseKey])
-            || [RudderUtils isEmpty:value]
-        ) {
+        if ((isECommerceEvent && [FIREBASE_TRACK_RESERVED_KEYWORDS containsObject:firebaseKey])
+            || [RudderUtils isEmpty:value]) {
             continue;
         }
         if ([value isKindOfClass:[NSNumber class]]) {
