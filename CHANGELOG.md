@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0](https://github.com/rudderlabs/rudder-integration-firebase-ios/compare/v3.7.0...v3.8.0) (2025-09-23)
+
+
+### Features
+
+* allow standard properties in non-eCommerce events ([#55](https://github.com/rudderlabs/rudder-integration-firebase-ios/issues/55)) ([d285f48](https://github.com/rudderlabs/rudder-integration-firebase-ios/commit/d285f4872cc528076faf0ee3404b9dfcb4573801))
+
 ## 3.7.0 (2025-07-23)
 
 
