@@ -220,6 +220,9 @@ RSClient *client;
     [properties setValue:@"value 1" forKey:@"key1"];
     [properties setValue:@(100) forKey:@"key2"];
     [properties setValue:@(200.25) forKey:@"key3"];
+    // Standard properties
+    [properties setValue:@"INR" forKey:@"currency"];
+    [properties setValue:@(24.55) forKey:@"value"];
     
     return properties;
 }

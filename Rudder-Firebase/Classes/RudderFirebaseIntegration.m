@@ -61,7 +61,7 @@
             }
             NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
             [params setValue:screenName forKey:kFIRParameterScreenName];
-            [self attachAllCustomProperties:params properties:message.properties];
+            [self attachAllCustomProperties:params properties:message.properties isECommerceEvent:NO];
             [FIRAnalytics logEventWithName:kFIREventScreenView parameters:params];
         } else if ([type isEqualToString:@"track"]) {
             NSString *eventName = message.event;
@@ -87,7 +87,7 @@
 -(void) handleApplicationOpenedEvent: (NSDictionary *) properties  {
     NSString *firebaseEvent = kFIREventAppOpen;
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [self makeFirebaseEvent: firebaseEvent params:params properties:properties];
+    [self makeFirebaseEvent: firebaseEvent params:params properties:properties isECommerceEvent:NO];
 }
 
 -(void) handleECommerceEvent: (NSString *) eventName properties: (NSDictionary *) properties {
@@ -115,7 +115,7 @@
         [self addConstantParamsForECommerceEvent:params eventName:eventName];
         [self handleECommerceEventProperties:params properties:properties firebaseEvent:firebaseEvent];
     }
-    [self makeFirebaseEvent:firebaseEvent params:params properties:properties];
+    [self makeFirebaseEvent:firebaseEvent params:params properties:properties isECommerceEvent:YES];
 }
 
 -(void) addConstantParamsForECommerceEvent:(NSMutableDictionary *) params eventName:(NSString *) eventName {
@@ -129,11 +129,11 @@
 -(void) handleCustomEvent: (NSString *) eventName properties: (NSDictionary *) properties {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     NSString *firebaseEvent = [RudderUtils getTrimKey:eventName];
-    [self makeFirebaseEvent:firebaseEvent params:params properties:properties];
+    [self makeFirebaseEvent:firebaseEvent params:params properties:properties isECommerceEvent:NO];
 }
 
--(void) makeFirebaseEvent:(NSString *) firebaseEvent params:(NSMutableDictionary *) params properties: (NSDictionary *) properties {
-    [self attachAllCustomProperties:params properties:properties];
+-(void) makeFirebaseEvent:(NSString *) firebaseEvent params:(NSMutableDictionary *) params properties: (NSDictionary *) properties isECommerceEvent:(BOOL) isECommerceEvent{
+    [self attachAllCustomProperties:params properties:properties isECommerceEvent:isECommerceEvent];
     [RSLogger logDebug:[NSString stringWithFormat:@"Logged \"%@\" to Firebase with properties: %@", firebaseEvent, properties]];
     [FIRAnalytics logEventWithName:firebaseEvent parameters:params];
 }
@@ -225,14 +225,15 @@
     }
 }
 
-- (void) attachAllCustomProperties: (NSMutableDictionary *) params properties: (NSDictionary *) properties {
+- (void) attachAllCustomProperties: (NSMutableDictionary *) params properties: (NSDictionary *) properties isECommerceEvent:(BOOL) isECommerceEvent {
     if([RudderUtils isEmpty:properties] || params == nil) {
         return;
     }
     for (NSString *key in [properties keyEnumerator]) {
         NSString* firebaseKey = [RudderUtils getTrimKey:key];
         id value = properties[key];
-        if ([FIREBASE_TRACK_RESERVED_KEYWORDS containsObject:firebaseKey] || [RudderUtils isEmpty:value]) {
+        if ((isECommerceEvent && [FIREBASE_TRACK_RESERVED_KEYWORDS containsObject:firebaseKey])
+            || [RudderUtils isEmpty:value]) {
             continue;
         }
         if ([value isKindOfClass:[NSNumber class]]) {
