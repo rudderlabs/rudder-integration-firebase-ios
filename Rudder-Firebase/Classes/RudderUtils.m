@@ -85,7 +85,8 @@ NSArray *EVENT_WITH_PRODUCTS_AT_ROOT;
 }
 
 +(NSString *) getTrimKey:(NSString *) key {
-    NSString * event = [[[key lowercaseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    NSString *event = [[key stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    event = [event stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
     NSUInteger trimLength = [@40 unsignedIntegerValue];
     if([event length] > trimLength) {
         event = [event substringToIndex:trimLength];
