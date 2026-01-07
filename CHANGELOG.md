@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 3.8.1 (2026-01-07)
+
+
+### Bug Fixes
+
+* handle lowercase strings and hyphen characters correctly ([#71](https://github.com/rudderlabs/rudder-integration-firebase-ios/issues/71)) ([67230a8](https://github.com/rudderlabs/rudder-integration-firebase-ios/commit/67230a8106dbd69e9605cb5e4d4c7b1f127404a1))
+
 ## [3.8.0](https://github.com/rudderlabs/rudder-integration-firebase-ios/compare/v3.7.0...v3.8.0) (2025-09-23)
 
 
