@@ -40,7 +40,7 @@ NSArray *EVENT_WITH_PRODUCTS_AT_ROOT;
         ECommPromotionClicked : kFIREventSelectPromotion,
         ECommCartViewed : kFIREventViewCart
     };
-
+    
     PRODUCT_PROPERTIES_MAPPING = @{
         @"product_id" : kFIRParameterItemID,
         @"name" : kFIRParameterItemName,
@@ -48,7 +48,7 @@ NSArray *EVENT_WITH_PRODUCTS_AT_ROOT;
         @"quantity" : kFIRParameterQuantity,
         @"price" : kFIRParameterPrice
     };
-
+    
     EVENT_WITH_PRODUCTS_ARRAY = [[NSArray alloc] initWithObjects:
                                  kFIREventBeginCheckout,
                                  kFIREventPurchase,
@@ -85,7 +85,8 @@ NSArray *EVENT_WITH_PRODUCTS_AT_ROOT;
 }
 
 +(NSString *) getTrimKey:(NSString *) key {
-    NSString * event = [[[key lowercaseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    NSString *event = [[[key lowercaseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    event = [event stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
     NSUInteger trimLength = [@40 unsignedIntegerValue];
     if([event length] > trimLength) {
         event = [event substringToIndex:trimLength];
