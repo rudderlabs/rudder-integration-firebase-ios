@@ -57,4 +57,4 @@ jobs:
         with:
           notionKey: ${{ secrets.NOTION_BOT_KEY }}
           notionDatabaseId: ${{ secrets.NOTION_PR_DB_ID }}
-          githubKey: ${{ secrets.PAT }}
+          githubKey: ${{ secrets.GITHUB_TOKEN }}
