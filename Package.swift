@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "Rudder-Firebase",
     platforms: [
-        .iOS("12.0"), .tvOS("13.0")
+        .iOS("15.0"), .tvOS("15.0")
     ],
     products: [
         .library(
@@ -13,7 +13,7 @@ let package = Package(
             targets: ["Rudder-Firebase"]),
     ],
     dependencies: [
-        .package(name: "Firebase", url: "https://github.com/firebase/firebase-ios-sdk", .exact("11.15.0")),
+        .package(name: "Firebase", url: "https://github.com/firebase/firebase-ios-sdk", from: "12.8.0"),
         .package(name: "Rudder", url: "https://github.com/rudderlabs/rudder-sdk-ios", from: "1.0.0"),
     ],
 
