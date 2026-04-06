@@ -46,6 +46,7 @@ jobs:
           HUSKY: 0
         run: |
           source_branch_name=${GITHUB_REF##*/}
+          source_sha=$(git rev-parse HEAD)
           release_type=release
           git fetch origin master --depth=1
           git merge origin/master
@@ -63,6 +64,7 @@ jobs:
           echo "New version is $new_version"
           echo "New release branch name is $branch_name"
 
+          echo "source_sha=$source_sha" >> $GITHUB_OUTPUT
           echo "source_branch_name=$source_branch_name" >> $GITHUB_OUTPUT
           echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
           echo "new_version=$new_version" >> $GITHUB_OUTPUT
@@ -73,7 +75,7 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
-          BASE_SHA=$(git rev-parse origin/master)
+          BASE_SHA=${{ steps.create-release.outputs.source_sha }}
           gh api repos/${{ github.repository }}/git/refs \
             --method POST \
             -f ref="refs/heads/${{ steps.create-release.outputs.branch_name }}" \
@@ -88,8 +90,11 @@ jobs:
 
       - name: Merge master into release branch
         run: |
+          git config user.name "GitHub actions"
+          git config user.email noreply@github.com
           git fetch origin master
           git merge origin/master --no-edit
+          git push
 
       - name: Update changelog and bump version (file changes only)
         id: finish-release
