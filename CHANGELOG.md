@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.9.0](https://github.com/rudderlabs/rudder-integration-firebase-ios/compare/v3.8.1...v3.9.0) (2026-04-07)
+
+
+### Features
+
+* **deps:** update Firebase iOS SDK dependency from 11.x to 12.x ([#78](https://github.com/rudderlabs/rudder-integration-firebase-ios/issues/78)) ([98b83ec](https://github.com/rudderlabs/rudder-integration-firebase-ios/commit/98b83ecee669a6088fb76cd4904388e713ddc281))
+
+
+### Bug Fixes
+
+* add permission-members read for team reviewer assignment ([ee7796d](https://github.com/rudderlabs/rudder-integration-firebase-ios/commit/ee7796dcfa9ae42400497cbface0e886e714c0cc))
+* remove non-existent files, fix changelog order, and remove pr_reviewer ([0a0497f](https://github.com/rudderlabs/rudder-integration-firebase-ios/commit/0a0497faac8c59659553ab4e62aba2a43ebf63cd))
+
 ### 3.8.1 (2026-01-07)
 
 
