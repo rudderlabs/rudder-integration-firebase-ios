@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.1](https://github.com/rudderlabs/rudder-integration-firebase-ios/compare/v3.9.0...v3.9.1) (2026-11-18)
+
+
+### Bug Fixes
+
+* sdk-5219 correct ios release workflows ([#89](https://github.com/rudderlabs/rudder-integration-firebase-ios/issues/89)) ([4374842](https://github.com/rudderlabs/rudder-integration-firebase-ios/commit/437484257e5d161575075dd25798983cd0c57bdf))
+* **vuln:** pin and bump action refs (SEC-171) ([4a8efa1](https://github.com/rudderlabs/rudder-integration-firebase-ios/commit/4a8efa1ea56cec3b07f52d59eacb963d680f3587))
+
 ## [3.9.0](https://github.com/rudderlabs/rudder-integration-firebase-ios/compare/v3.8.1...v3.9.0) (2026-04-07)
 
 
